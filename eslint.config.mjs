@@ -13,7 +13,11 @@ export default [
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
   pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
+  ...tseslint.configs({
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'error',
+    },
+  }),
   pluginReact.configs.flat.recommended,
   reactHooks.configs['recommended-latest'],
   prettierConfig,
