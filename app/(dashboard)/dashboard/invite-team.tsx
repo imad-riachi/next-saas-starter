@@ -7,7 +7,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  CardFooter
+  CardFooter,
 } from '@/components/ui/card';
 import { Loader2, PlusCircle } from 'lucide-react';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -36,14 +36,14 @@ export function InviteTeamMember() {
         <CardTitle>Invite Team Member</CardTitle>
       </CardHeader>
       <CardContent>
-        <form action={inviteAction} className="space-y-4">
+        <form action={inviteAction} className='space-y-4'>
           <div>
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor='email'>Email</Label>
             <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Enter email"
+              id='email'
+              name='email'
+              type='email'
+              placeholder='Enter email'
               required
               disabled={!isOwner}
             />
@@ -51,40 +51,40 @@ export function InviteTeamMember() {
           <div>
             <Label>Role</Label>
             <RadioGroup
-              defaultValue="member"
-              name="role"
-              className="flex space-x-4"
+              defaultValue='member'
+              name='role'
+              className='flex space-x-4'
               disabled={!isOwner}
             >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="member" id="member" />
-                <Label htmlFor="member">Member</Label>
+              <div className='flex items-center space-x-2'>
+                <RadioGroupItem value='member' id='member' />
+                <Label htmlFor='member'>Member</Label>
               </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="owner" id="owner" />
-                <Label htmlFor="owner">Owner</Label>
+              <div className='flex items-center space-x-2'>
+                <RadioGroupItem value='owner' id='owner' />
+                <Label htmlFor='owner'>Owner</Label>
               </div>
             </RadioGroup>
           </div>
           {inviteState?.error && (
-            <p className="text-red-500">{inviteState.error}</p>
+            <p className='text-red-500'>{inviteState.error}</p>
           )}
           {inviteState?.success && (
-            <p className="text-green-500">{inviteState.success}</p>
+            <p className='text-green-500'>{inviteState.success}</p>
           )}
           <Button
-            type="submit"
-            className="bg-orange-500 hover:bg-orange-600 text-white"
+            type='submit'
+            className='bg-orange-500 text-white hover:bg-orange-600'
             disabled={isInvitePending || !isOwner}
           >
             {isInvitePending ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                 Inviting...
               </>
             ) : (
               <>
-                <PlusCircle className="mr-2 h-4 w-4" />
+                <PlusCircle className='mr-2 h-4 w-4' />
                 Invite Member
               </>
             )}
@@ -93,7 +93,7 @@ export function InviteTeamMember() {
       </CardContent>
       {!isOwner && (
         <CardFooter>
-          <p className="text-sm text-muted-foreground">
+          <p className='text-muted-foreground text-sm'>
             You must be a team owner to invite new members.
           </p>
         </CardFooter>

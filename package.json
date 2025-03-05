@@ -11,7 +11,9 @@
     "db:studio": "drizzle-kit studio",
     "stripe": "stripe",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "lint:css": "stylelint '**/*.{css,scss}'",
+    "lint:css:fix": "stylelint '**/*.{css,scss}' --fix"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.2",
@@ -59,13 +61,24 @@
     ]
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.0",
     "@eslint/js": "^9.21.0",
+    "@next/eslint-plugin-next": "^15.2.1",
     "eslint": "^9.21.0",
     "eslint-config-prettier": "^10.0.2",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "globals": "^16.0.0",
     "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "stylelint": "^16.15.0",
+    "stylelint-config-prettier": "^9.0.5",
+    "stylelint-config-prettier-scss": "^1.0.0",
+    "stylelint-config-standard": "^37.0.0",
+    "stylelint-config-standard-scss": "^14.0.0",
+    "stylelint-config-tailwindcss": "^1.0.0",
+    "stylelint-prettier": "^5.0.3",
     "typescript-eslint": "^8.26.0"
   }
 }
