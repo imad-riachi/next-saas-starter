@@ -25,7 +25,7 @@ export default function SecurityPage() {
   >(deleteAccount, { error: '', success: '' });
 
   const handlePasswordSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
+    event: React.FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
     // If you call the Server Action directly, it will automatically
@@ -41,7 +41,7 @@ export default function SecurityPage() {
   };
 
   const handleDeleteSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
+    event: React.FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
     startTransition(() => {
@@ -50,70 +50,70 @@ export default function SecurityPage() {
   };
 
   return (
-    <section className="flex-1 p-4 lg:p-8">
-      <h1 className="text-lg lg:text-2xl font-medium bold text-gray-900 mb-6">
+    <section className='flex-1 p-4 lg:p-8'>
+      <h1 className='bold mb-6 text-lg font-medium text-gray-900 lg:text-2xl'>
         Security Settings
       </h1>
-      <Card className="mb-8">
+      <Card className='mb-8'>
         <CardHeader>
           <CardTitle>Password</CardTitle>
         </CardHeader>
         <CardContent>
-          <form className="space-y-4" onSubmit={handlePasswordSubmit}>
+          <form className='space-y-4' onSubmit={handlePasswordSubmit}>
             <div>
-              <Label htmlFor="current-password">Current Password</Label>
+              <Label htmlFor='current-password'>Current Password</Label>
               <Input
-                id="current-password"
-                name="currentPassword"
-                type="password"
-                autoComplete="current-password"
+                id='current-password'
+                name='currentPassword'
+                type='password'
+                autoComplete='current-password'
                 required
                 minLength={8}
                 maxLength={100}
               />
             </div>
             <div>
-              <Label htmlFor="new-password">New Password</Label>
+              <Label htmlFor='new-password'>New Password</Label>
               <Input
-                id="new-password"
-                name="newPassword"
-                type="password"
-                autoComplete="new-password"
+                id='new-password'
+                name='newPassword'
+                type='password'
+                autoComplete='new-password'
                 required
                 minLength={8}
                 maxLength={100}
               />
             </div>
             <div>
-              <Label htmlFor="confirm-password">Confirm New Password</Label>
+              <Label htmlFor='confirm-password'>Confirm New Password</Label>
               <Input
-                id="confirm-password"
-                name="confirmPassword"
-                type="password"
+                id='confirm-password'
+                name='confirmPassword'
+                type='password'
                 required
                 minLength={8}
                 maxLength={100}
               />
             </div>
             {passwordState.error && (
-              <p className="text-red-500 text-sm">{passwordState.error}</p>
+              <p className='text-sm text-red-500'>{passwordState.error}</p>
             )}
             {passwordState.success && (
-              <p className="text-green-500 text-sm">{passwordState.success}</p>
+              <p className='text-sm text-green-500'>{passwordState.success}</p>
             )}
             <Button
-              type="submit"
-              className="bg-orange-500 hover:bg-orange-600 text-white"
+              type='submit'
+              className='bg-orange-500 text-white hover:bg-orange-600'
               disabled={isPasswordPending}
             >
               {isPasswordPending ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                   Updating...
                 </>
               ) : (
                 <>
-                  <Lock className="mr-2 h-4 w-4" />
+                  <Lock className='mr-2 h-4 w-4' />
                   Update Password
                 </>
               )}
@@ -127,38 +127,38 @@ export default function SecurityPage() {
           <CardTitle>Delete Account</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-gray-500 mb-4">
+          <p className='mb-4 text-sm text-gray-500'>
             Account deletion is non-reversable. Please proceed with caution.
           </p>
-          <form onSubmit={handleDeleteSubmit} className="space-y-4">
+          <form onSubmit={handleDeleteSubmit} className='space-y-4'>
             <div>
-              <Label htmlFor="delete-password">Confirm Password</Label>
+              <Label htmlFor='delete-password'>Confirm Password</Label>
               <Input
-                id="delete-password"
-                name="password"
-                type="password"
+                id='delete-password'
+                name='password'
+                type='password'
                 required
                 minLength={8}
                 maxLength={100}
               />
             </div>
             {deleteState.error && (
-              <p className="text-red-500 text-sm">{deleteState.error}</p>
+              <p className='text-sm text-red-500'>{deleteState.error}</p>
             )}
             <Button
-              type="submit"
-              variant="destructive"
-              className="bg-red-600 hover:bg-red-700"
+              type='submit'
+              variant='destructive'
+              className='bg-red-600 hover:bg-red-700'
               disabled={isDeletePending}
             >
               {isDeletePending ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                   Deleting...
                 </>
               ) : (
                 <>
-                  <Trash2 className="mr-2 h-4 w-4" />
+                  <Trash2 className='mr-2 h-4 w-4' />
                   Delete Account
                 </>
               )}

@@ -18,7 +18,7 @@ export function Terminal() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setTerminalStep((prev) =>
-        prev < terminalSteps.length - 1 ? prev + 1 : prev
+        prev < terminalSteps.length - 1 ? prev + 1 : prev,
       );
     }, 500);
 
@@ -32,33 +32,33 @@ export function Terminal() {
   };
 
   return (
-    <div className="w-full rounded-lg shadow-lg overflow-hidden bg-gray-900 text-white font-mono text-sm relative">
-      <div className="p-4">
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex space-x-2">
-            <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+    <div className='relative w-full overflow-hidden rounded-lg bg-gray-900 font-mono text-sm text-white shadow-lg'>
+      <div className='p-4'>
+        <div className='mb-4 flex items-center justify-between'>
+          <div className='flex space-x-2'>
+            <div className='h-3 w-3 rounded-full bg-red-500'></div>
+            <div className='h-3 w-3 rounded-full bg-yellow-500'></div>
+            <div className='h-3 w-3 rounded-full bg-green-500'></div>
           </div>
           <button
             onClick={copyToClipboard}
-            className="text-gray-400 hover:text-white transition-colors"
-            aria-label="Copy to clipboard"
+            className='text-gray-400 transition-colors hover:text-white'
+            aria-label='Copy to clipboard'
           >
             {copied ? (
-              <Check className="h-5 w-5" />
+              <Check className='h-5 w-5' />
             ) : (
-              <Copy className="h-5 w-5" />
+              <Copy className='h-5 w-5' />
             )}
           </button>
         </div>
-        <div className="space-y-2">
+        <div className='space-y-2'>
           {terminalSteps.map((step, index) => (
             <div
               key={index}
               className={`${index > terminalStep ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
             >
-              <span className="text-green-400">$</span> {step}
+              <span className='text-green-400'>$</span> {step}
             </div>
           ))}
         </div>

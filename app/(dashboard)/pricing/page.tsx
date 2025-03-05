@@ -19,8 +19,8 @@ export default async function PricingPage() {
   const plusPrice = prices.find((price) => price.productId === plusPlan?.id);
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="grid md:grid-cols-2 gap-8 max-w-xl mx-auto">
+    <main className='mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8'>
+      <div className='mx-auto grid max-w-xl gap-8 md:grid-cols-2'>
         <PricingCard
           name={basePlan?.name || 'Base'}
           price={basePrice?.unitAmount || 800}
@@ -66,27 +66,27 @@ function PricingCard({
   priceId?: string;
 }) {
   return (
-    <div className="pt-6">
-      <h2 className="text-2xl font-medium text-gray-900 mb-2">{name}</h2>
-      <p className="text-sm text-gray-600 mb-4">
+    <div className='pt-6'>
+      <h2 className='mb-2 text-2xl font-medium text-gray-900'>{name}</h2>
+      <p className='mb-4 text-sm text-gray-600'>
         with {trialDays} day free trial
       </p>
-      <p className="text-4xl font-medium text-gray-900 mb-6">
+      <p className='mb-6 text-4xl font-medium text-gray-900'>
         ${price / 100}{' '}
-        <span className="text-xl font-normal text-gray-600">
+        <span className='text-xl font-normal text-gray-600'>
           per user / {interval}
         </span>
       </p>
-      <ul className="space-y-4 mb-8">
+      <ul className='mb-8 space-y-4'>
         {features.map((feature, index) => (
-          <li key={index} className="flex items-start">
-            <Check className="h-5 w-5 text-orange-500 mr-2 mt-0.5 flex-shrink-0" />
-            <span className="text-gray-700">{feature}</span>
+          <li key={index} className='flex items-start'>
+            <Check className='mt-0.5 mr-2 h-5 w-5 flex-shrink-0 text-orange-500' />
+            <span className='text-gray-700'>{feature}</span>
           </li>
         ))}
       </ul>
       <form action={checkoutAction}>
-        <input type="hidden" name="priceId" value={priceId} />
+        <input type='hidden' name='priceId' value={priceId} />
         <SubmitButton />
       </form>
     </div>

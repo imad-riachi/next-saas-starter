@@ -9,19 +9,19 @@ export function SubmitButton() {
 
   return (
     <Button
-      type="submit"
+      type='submit'
       disabled={pending}
-      className="w-full bg-white hover:bg-gray-100 text-black border border-gray-200 rounded-full flex items-center justify-center"
+      className='flex w-full items-center justify-center rounded-full border border-gray-200 bg-white text-black hover:bg-gray-100'
     >
       {pending ? (
         <>
-          <Loader2 className="animate-spin mr-2 h-4 w-4" />
+          <Loader2 className='mr-2 h-4 w-4 animate-spin' />
           Loading...
         </>
       ) : (
         <>
           Get Started
-          <ArrowRight className="ml-2 h-4 w-4" />
+          <ArrowRight className='ml-2 h-4 w-4' />
         </>
       )}
     </Button>
