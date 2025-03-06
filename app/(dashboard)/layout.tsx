@@ -14,6 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useUser } from '@/lib/auth';
 import { signOut } from '@/app/(login)/actions';
 import { useRouter } from 'next/navigation';
+import ThemeToggle from '@/components/theme-toggle';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -35,6 +36,7 @@ function Header() {
           <span className='ml-2 text-xl font-semibold text-gray-900'>ACME</span>
         </Link>
         <div className='flex items-center space-x-4'>
+          <ThemeToggle />
           <Link
             href='/pricing'
             className='text-sm font-medium text-gray-700 hover:text-gray-900'

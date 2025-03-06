@@ -4,6 +4,8 @@ import { Manrope } from 'next/font/google';
 import { UserProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
 
+import ThemeProvider from '@/components/theme-provider';
+
 export const metadata: Metadata = {
   title: 'Next.js SaaS Starter',
   description: 'Get started quickly with Next.js, Postgres, and Stripe.',
@@ -23,12 +25,17 @@ export default function RootLayout({
   const userPromise = getUser();
 
   return (
-    <html
-      lang='en'
-      className={`bg-white text-black dark:bg-gray-950 dark:text-white ${manrope.className}`}
-    >
-      <body className='min-h-[100dvh] bg-gray-50'>
-        <UserProvider userPromise={userPromise}>{children}</UserProvider>
+    <html lang='en' className={`${manrope.className}`} suppressHydrationWarning>
+      <head />
+      <body>
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem
+          disableTransitionOnChange
+        >
+          <UserProvider userPromise={userPromise}>{children}</UserProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
