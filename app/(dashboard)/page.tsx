@@ -21,13 +21,13 @@ export default function HomePage() {
       <section className='py-16'>
         <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
           <div className='text-center'>
-            <h2 className='text-2xl font-semibold text-orange-500'>
+            <h2 className='text-primary text-2xl font-semibold'>
               Powerful Features
             </h2>
-            <h1 className='mt-2 text-3xl font-bold text-gray-900 sm:text-4xl'>
+            <h1 className='text-foreground mt-2 text-3xl font-bold sm:text-4xl'>
               Everything You Need in One Assistant
             </h1>
-            <p className='mt-4 text-lg text-gray-500'>
+            <p className='text-foreground-muted mt-4 text-lg'>
               VirtualBot combines cutting-edge AI with intuitive design to
               provide a seamless and helpful experience for all your needs.
             </p>

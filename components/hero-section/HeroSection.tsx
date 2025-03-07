@@ -21,20 +21,22 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     <>
       <div className='relative z-10'>
         <main className='container mx-auto px-4 py-12'>
-          <div className='bg-foreground relative mx-auto mt-8 max-w-6xl rounded-3xl p-8 shadow-2xl'>
+          <div className='bg-foreground relative mx-auto mt-8 max-w-6xl rounded-3xl shadow-2xl'>
             <div className='grid gap-8 md:grid-cols-2'>
               <div className='space-y-6 p-4'>
                 <AnimatedText
                   text={heroText}
                   tag='h1'
-                  className='text-5xl leading-tight font-bold text-white md:text-6xl lg:text-7xl'
+                  className='text-background text-5xl leading-tight font-bold md:text-6xl lg:text-7xl'
                 />
 
                 <div className='bg-accent-foreground text-background max-w-md space-y-4 rounded-xl p-6'>
                   <h2 className='text-xl font-bold uppercase'>
                     {heroDescriptionHeading}
                   </h2>
-                  <p className='text-sm text-white/80'>{heroDescription}</p>
+                  <p className='text-background/80 text-sm'>
+                    {heroDescription}
+                  </p>
                   <Link
                     href={href}
                     className='group bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-full px-8 py-3 text-lg font-bold shadow transition-all'
@@ -64,10 +66,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({
               <div className='relative flex items-center justify-center'>
                 {/* Character placeholder */}
                 <Image
+                  sizes='100vw'
                   src='/blog-posting-agent.png?height=500&width=400'
-                  alt='Virtual Assistant Character'
                   width={400}
                   height={500}
+                  alt='Virtual Assistant Character'
+                  style={{ width: '100%', height: 'auto' }}
                   className='relative z-10'
                 />
               </div>
