@@ -12,7 +12,7 @@ const Template: StoryFn<FeatureCardProps> = (args) => <FeatureCard {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  icon: <Database className='h-6 w-6' />,
+  icon: 'Database',
   title: 'Robust Database',
   description: 'Efficient data management with our intuitive ORM.',
 };
