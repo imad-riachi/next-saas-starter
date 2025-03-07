@@ -38,7 +38,7 @@ const Navbar: React.FC<NavbarProps> = ({ links, children }) => {
         <Link href='/' className='relative z-10 flex items-center'>
           <span className='text-2xl font-bold'>
             <span className='text-foreground'>Leon</span>
-            <span className='text-primary-foreground'>Ai</span>
+            <span className='text-primary'>Ai</span>
             <span className='text-foreground'>rdo</span>
           </span>
         </Link>
