@@ -6,6 +6,7 @@ import prettierConfig from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
 import reactHooks from 'eslint-plugin-react-hooks';
 import nextEslint from '@next/eslint-plugin-next';
+import * as mdx from 'eslint-plugin-mdx';
 
 /** @type {import('eslint').Linter.Config[]} */
 
@@ -16,6 +17,7 @@ export default [
   pluginReact.configs.flat.recommended,
   reactHooks.configs['recommended-latest'],
   ...tseslint.configs.recommended,
+  { ...mdx.flat },
   prettierConfig,
   {
     plugins: { prettier: prettierPlugin, '@next/next': nextEslint },
