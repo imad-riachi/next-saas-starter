@@ -24,6 +24,21 @@ export async function createCheckoutSession({
     redirect(`/sign-up?redirect=checkout&priceId=${priceId}`);
   }
 
+  const subscriptions = await stripe.subscriptions.list({
+    customer: team.stripeCustomerId || '',
+    status: 'all',
+    limit: 1, // We only need to check if at least one active subscription exists
+  });
+
+  const relevantSubscription = subscriptions.data.find((sub) =>
+    ['active', 'trialing'].includes(sub.status),
+  );
+
+  if (relevantSubscription) {
+    const portalSession = await createCustomerPortalSession(team);
+    redirect(portalSession.url);
+  }
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: [
@@ -39,7 +54,7 @@ export async function createCheckoutSession({
     client_reference_id: user.id.toString(),
     allow_promotion_codes: true,
     subscription_data: {
-      trial_period_days: 14,
+      trial_period_days: 7,
     },
   });
 

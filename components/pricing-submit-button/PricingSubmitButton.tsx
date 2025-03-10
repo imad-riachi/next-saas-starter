@@ -22,7 +22,7 @@ const PricingButton: React.FC<PricingButtonProps> = ({
 
   return (
     <button
-      className={`group relative w-full overflow-hidden rounded-full bg-gradient-to-r ${gradientFrom} ${gradientTo} px-8 py-4 font-medium text-white shadow-md transition-all duration-300 hover:shadow-lg hover:${hoverFrom} hover:${hoverTo}`}
+      className={`group relative w-full overflow-hidden rounded-full bg-gradient-to-r ${gradientFrom} ${gradientTo} px-8 py-4 font-medium text-white shadow-md transition-all duration-300 hover:shadow-lg hover:${hoverFrom} hover:${hoverTo} cursor-pointer`}
     >
       <span className='relative z-10 flex items-center justify-center'>
         {pending ? '...Loading' : label}
