@@ -31,7 +31,7 @@ function Header() {
 
   return (
     <header>
-      <div className='mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8'>
+      <div className='mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8'>
         <Navbar links={[{ name: 'Prices', path: '/pricing' }]}>
           {user ? (
             <UserAvatarMenu user={user} handleSignOut={handleSignOut} />
@@ -51,7 +51,7 @@ function Header() {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <section className='flex min-h-screen flex-col'>
+    <section className='flex min-h-screen flex-col pt-17'>
       <Header />
       {children}
     </section>

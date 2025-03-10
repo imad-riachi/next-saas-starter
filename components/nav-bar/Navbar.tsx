@@ -34,11 +34,11 @@ const Navbar: React.FC<NavbarProps> = ({ links, children }) => {
     <header
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-background/80 py-2 shadow-sm backdrop-blur-md'
-          : 'bg-transparent py-4'
+          ? 'bg-background/80 shadow-sm backdrop-blur-md'
+          : 'bg-transparent'
       }`}
     >
-      <div className='container mx-auto flex items-center justify-between px-4'>
+      <div className='container mx-auto flex h-17 items-center justify-between px-4'>
         {/* Logo */}
         <Link href='/' className='relative z-10 flex items-center'>
           <span className='text-2xl font-bold'>
