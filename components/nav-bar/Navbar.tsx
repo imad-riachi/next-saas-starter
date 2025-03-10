@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 
+import { usePathname } from 'next/navigation';
+
 export type NavbarProps = {
   links: { name: string; path: string }[];
   children?: React.ReactNode;
@@ -14,6 +16,9 @@ export type NavbarProps = {
 const Navbar: React.FC<NavbarProps> = ({ links, children }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isDashboard = pathname.startsWith('/dashboard');
 
   // Handle scroll event to change navbar appearance
   useEffect(() => {
@@ -63,8 +68,6 @@ const Navbar: React.FC<NavbarProps> = ({ links, children }) => {
             {children}
           </div>
         </nav>
-
-        {/* Mobile Menu Button */}
         <div className='flex items-center md:hidden'>
           <ThemeToggle />
           {children}
