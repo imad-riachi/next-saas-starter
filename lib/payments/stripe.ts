@@ -25,7 +25,7 @@ export async function createCheckoutSession({
   }
 
   const subscriptions = await stripe.subscriptions.list({
-    customer: team.stripeCustomerId || '',
+    customer: team.stripeCustomerId || undefined,
     status: 'all',
     limit: 1, // We only need to check if at least one active subscription exists
   });

@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
 import { UserProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
+import Script from 'next/script';
 
 import ThemeProvider from '@/components/theme-provider';
 
@@ -25,10 +26,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const userPromise = getUser();
+  const gtmId = process.env.GTM_ID; // Access the GTM ID from the environment
 
   return (
     <html lang='en' className={`${manrope.className}`} suppressHydrationWarning>
-      <head />
+      <head>
+        {/* Google tag (gtag.js) */}
+        <Script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${gtmId}`}
+        ></Script>
+        <Script>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${gtmId}');
+          `}
+        </Script>
+      </head>
       <body>
         <ThemeProvider
           attribute='class'
