@@ -6,9 +6,11 @@ import { getUser } from '@/lib/db/queries';
 
 import ThemeProvider from '@/components/theme-provider';
 
+import content from '../content.json';
+
 export const metadata: Metadata = {
-  title: 'Next.js SaaS Starter',
-  description: 'Get started quickly with Next.js, Postgres, and Stripe.',
+  title: content.metadata.title,
+  description: content.metadata.description,
 };
 
 export const viewport: Viewport = {

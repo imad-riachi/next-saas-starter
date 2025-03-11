@@ -4,7 +4,7 @@ import { Terminal } from './terminal';
 import HeroSection from '@/components/hero-section';
 import FeatureCard from '@/components/feature-card';
 
-import content from './content.json';
+import content from '../../content.json';
 
 export default function HomePage() {
   return (

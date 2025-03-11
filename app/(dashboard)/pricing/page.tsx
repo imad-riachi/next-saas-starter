@@ -3,7 +3,7 @@ import { getStripePrices, getStripeProducts } from '@/lib/payments/stripe';
 import PricingHeader from '@/components/pricing-header';
 import PriceCard from '@/components/pricing-card';
 
-import content from './content.json';
+import content from '../../../content.json';
 
 // Prices are fresh for one hour max
 export const revalidate = 3600;
@@ -23,8 +23,8 @@ export default async function PricingPage() {
   return (
     <main className='mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8'>
       <PricingHeader
-        title={content.header.title}
-        subtitle={content.header.subtitle}
+        title={content.pricing.title}
+        subtitle={content.pricing.subtitle}
       />
       <div className='grid gap-8 md:grid-cols-2'>
         <PriceCard

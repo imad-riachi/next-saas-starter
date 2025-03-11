@@ -3,14 +3,6 @@
 import Link from 'next/link';
 import { use, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { CircleIcon, Home, LogOut } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useUser } from '@/lib/auth';
 import { signOut } from '@/app/(login)/actions';
 import { useRouter } from 'next/navigation';
@@ -18,7 +10,6 @@ import Navbar from '@/components/nav-bar';
 import UserAvatarMenu from '@/components/user-avatar-menu';
 
 function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { userPromise } = useUser();
   const user = use(userPromise);
   const router = useRouter();
