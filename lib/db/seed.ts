@@ -3,37 +3,29 @@ import { db } from './drizzle';
 import { users, teams, teamMembers } from './schema';
 import { hashPassword } from '@/lib/auth/session';
 
+import Stripe from 'stripe';
+
+import content from '../../content.json';
+
 async function createStripeProducts() {
   console.log('Creating Stripe products and prices...');
 
-  const baseProduct = await stripe.products.create({
-    name: 'Base',
-    description: 'Base subscription plan',
-  });
+  content.pricing.products.forEach(async (product) => {
+    const baseProduct = await stripe.products.create({
+      name: product.name,
+      description: product.description,
+    });
 
-  await stripe.prices.create({
-    product: baseProduct.id,
-    unit_amount: 800, // $8 in cents
-    currency: 'usd',
-    recurring: {
-      interval: 'month',
-      trial_period_days: 7,
-    },
-  });
-
-  const plusProduct = await stripe.products.create({
-    name: 'Plus',
-    description: 'Plus subscription plan',
-  });
-
-  await stripe.prices.create({
-    product: plusProduct.id,
-    unit_amount: 1200, // $12 in cents
-    currency: 'usd',
-    recurring: {
-      interval: 'month',
-      trial_period_days: 7,
-    },
+    await stripe.prices.create({
+      product: baseProduct.id,
+      unit_amount: product.unit_amount,
+      currency: product.currency,
+      recurring: {
+        interval: product.recurring
+          .interval as Stripe.PriceCreateParams.Recurring.Interval,
+        trial_period_days: product.recurring.trial_period_days,
+      },
+    });
   });
 
   console.log('Stripe products and prices created successfully.');

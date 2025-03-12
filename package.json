@@ -10,6 +10,7 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "stripe": "stripe",
+    "stripe:create-products": "npx tsx lib/payments/create-products.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:css": "stylelint '**/*.{css,scss}'",

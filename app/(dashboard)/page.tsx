@@ -1,9 +1,8 @@
 import { Button } from '@/components/ui/button';
-import { ArrowRight, CreditCard, Database } from 'lucide-react';
+import { ArrowRight, CreditCard, Database, icons } from 'lucide-react';
 import { Terminal } from './terminal';
 import HeroSection from '@/components/hero-section';
 import FeatureCard from '@/components/feature-card';
-
 import content from '../../content.json';
 
 export default function HomePage() {
@@ -22,32 +21,26 @@ export default function HomePage() {
         <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
           <div className='text-center'>
             <h2 className='text-primary text-2xl font-semibold'>
-              Powerful Features
+              {content.features.title}
             </h2>
             <h1 className='text-foreground mt-2 text-3xl font-bold sm:text-4xl'>
-              Everything You Need in One Assistant
+              {content.features.subtitle}
             </h1>
             <p className='text-foreground-muted mt-4 text-lg'>
-              VirtualBot combines cutting-edge AI with intuitive design to
-              provide a seamless and helpful experience for all your needs.
+              {content.features.subtitle}
             </p>
           </div>
           <div className='mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3'>
-            <FeatureCard
-              icon='Database'
-              title='Robust Database'
-              description='Efficient data management with a scalable database solution.'
-            />
-            <FeatureCard
-              icon='CreditCard'
-              title='Secure Payments'
-              description='Seamless payment processing with top-notch security.'
-            />
-            <FeatureCard
-              icon='Terminal'
-              title='Developer Tools'
-              description='Advanced tools for developers to streamline workflows.'
-            />
+            {content.features.cards.map(
+              ({ icon, title, description }, index) => (
+                <FeatureCard
+                  key={index}
+                  icon={icon as keyof typeof icons}
+                  title={title}
+                  description={description}
+                />
+              ),
+            )}
           </div>
         </div>
       </section>
