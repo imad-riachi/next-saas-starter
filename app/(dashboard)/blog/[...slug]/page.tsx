@@ -3,9 +3,9 @@ import { ArrowLeft, Calendar, User } from 'lucide-react';
 import { getPost } from '@/lib/posts';
 
 type BlogPostProps = {
-  params: {
+  params: Promise<{
     slug: string[];
-  };
+  }>;
 };
 
 const BlogPost: React.FC<BlogPostProps> = async ({ params }) => {
@@ -52,7 +52,7 @@ const BlogPost: React.FC<BlogPostProps> = async ({ params }) => {
           />
         </div>
       )}
-      <article className='prose lg:prose-xl prose-foreground max-w-none'>
+      <article className='prose lg:prose-xl prose-foreground dark:prose-invert max-w-none'>
         {content}
       </article>
     </div>
