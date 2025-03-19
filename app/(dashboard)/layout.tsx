@@ -23,7 +23,12 @@ function Header() {
   return (
     <header>
       <div className='mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8'>
-        <Navbar links={[{ name: 'Prices', path: '/pricing' }]}>
+        <Navbar
+          links={[
+            { name: 'Blog', path: '/blog' },
+            { name: 'Prices', path: '/pricing' },
+          ]}
+        >
           {user ? (
             <UserAvatarMenu user={user} handleSignOut={handleSignOut} />
           ) : (
