@@ -32,6 +32,76 @@ cd saas-starter
 pnpm install
 ```
 
+## Environment Variables Setup
+
+The repository includes a `.env.example` file that you can use as a template. To get started:
+
+1. Copy the example file:
+
+```bash
+cp .env.example .env
+```
+
+2. Update the values in your `.env` file with your own configuration:
+
+```env
+# Database URL for PostgreSQL
+# Format: postgresql://USER:PASSWORD@HOST:PORT/DATABASE
+# For local development with Docker, use:
+POSTGRES_URL=postgresql://postgres:postgres@localhost:5433/saas_db
+
+# Stripe Configuration
+# Get these from your Stripe Dashboard (https://dashboard.stripe.com/test/apikeys)
+STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=whsec_your_stripe_webhook_secret
+
+# Base URL for your application
+# For local development:
+BASE_URL=http://localhost:3000
+
+# Authentication Secret
+# Generate a random string using: openssl rand -base64 32
+AUTH_SECRET=your_generated_auth_secret
+```
+
+### Detailed Setup Instructions
+
+1. **Database URL (POSTGRES_URL)**:
+
+   - For local development with Docker: `postgresql://postgres:postgres@localhost:5433/saas_db`
+   - For production: Use your production database URL
+   - Make sure the database is running before starting the application
+
+2. **Stripe Configuration**:
+
+   - Sign up for a Stripe account at https://stripe.com
+   - Go to the Stripe Dashboard → Developers → API keys
+   - Copy your "Secret key" (starts with `sk_test_` for test mode)
+   - For webhook secret:
+     - Go to Stripe Dashboard → Developers → Webhooks
+     - Create a new webhook endpoint pointing to your application
+     - Copy the "Signing secret" (starts with `whsec_`)
+
+3. **Base URL (BASE_URL)**:
+
+   - For local development: `http://localhost:3000`
+   - For production: Your actual domain (e.g., `https://your-app.com`)
+
+4. **Auth Secret (AUTH_SECRET)**:
+   - Generate a secure random string using:
+     ```bash
+     openssl rand -base64 32
+     ```
+   - Copy the generated string
+   - Keep this secret secure and never commit it to version control
+
+### Important Notes
+
+- Never commit your `.env` file to version control
+- Keep your production secrets secure and rotate them regularly
+- Use different API keys for development and production environments
+- The provided values in the example are for illustration only - you must replace them with your own values
+
 ## Local Database Setup
 
 This project uses Docker to run PostgreSQL and pgAdmin locally. The setup is isolated to avoid conflicts with other local databases.
@@ -209,6 +279,19 @@ In your Vercel project settings (or during deployment), add all the necessary en
 3. `STRIPE_WEBHOOK_SECRET`: Use the webhook secret from the production webhook you created in step 1.
 4. `POSTGRES_URL`: Set this to your production database URL.
 5. `AUTH_SECRET`: Set this to a random string. `openssl rand -base64 32` will generate one.
+
+To set up your production environment variables on Vercel, you can use the `.env.vercel` file:
+
+```bash
+# Create .env.vercel file with your production variables
+cp .env.example .env.vercel
+
+# Edit .env.vercel with your production values
+# Then deploy the environment variables to Vercel
+pnpm deploy-env
+```
+
+This will sync your `.env.vercel` file with your Vercel project's environment variables. Note that this is separate from your local `.env` file and is specifically for managing production environment variables on Vercel.
 
 ## Other Templates
 
