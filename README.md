@@ -24,6 +24,67 @@ This is a starter template for building a SaaS application using **Next.js** wit
 - **Payments**: [Stripe](https://stripe.com/)
 - **UI Library**: [shadcn/ui](https://ui.shadcn.com/)
 
+## Prerequisites
+
+Before you begin setting up this project, you'll need to have the following accounts and configurations ready:
+
+### 1. Vercel Account
+
+- Sign up for a Vercel account at [vercel.com](https://vercel.com)
+- Create a new project in your Vercel dashboard
+- You'll need this to deploy your application to production
+
+### 2. Stripe Account and Webhook Setup
+
+1. Create a Stripe account at [stripe.com](https://stripe.com)
+2. Install the Stripe CLI:
+   - **macOS** (using Homebrew):
+     ```bash
+     brew install stripe/stripe-cli/stripe
+     ```
+   - **Windows** (using Scoop):
+     ```bash
+     scoop bucket add stripe https://github.com/stripe/scoop-stripe-cli.git
+     scoop install stripe
+     ```
+   - **Linux**:
+     ```bash
+     # Download the latest Linux tar.gz
+     curl -s https://packages.stripe.dev/api/security/keypair/stripe-cli-gpg/public | gpg --dearmor | sudo tee /usr/share/keyrings/stripe.gpg
+     echo "deb [signed-by=/usr/share/keyrings/stripe.gpg] https://packages.stripe.dev/stripe-cli-debian-local stable main" | sudo tee -a /etc/apt/sources.list.d/stripe.list
+     sudo apt update
+     sudo apt install stripe
+     ```
+   - **Alternative**: Download directly from [Stripe CLI releases](https://github.com/stripe/stripe-cli/releases/latest)
+3. Set up a webhook endpoint:
+   - Go to Stripe Dashboard → Developers → Webhooks
+   - Click "Add endpoint"
+   - For local development:
+     - Use the Stripe CLI command: `stripe listen --forward-to localhost:3000/api/stripe/webhook`
+     - Copy the webhook signing secret (starts with `whsec_`)
+   - For production:
+     - Set the endpoint URL to `https://your-domain.com/api/stripe/webhook`
+     - Select events to listen for:
+       - `checkout.session.completed`
+       - `customer.subscription.updated`
+       - `customer.subscription.deleted`
+     - Copy the webhook signing secret
+4. Get your API keys:
+   - Go to Stripe Dashboard → Developers → API keys
+   - Copy your "Secret key" (starts with `sk_test_` for test mode)
+   - Keep these keys secure and never commit them to version control
+
+### 3. Supabase Database
+
+1. Create a Supabase account at [supabase.com](https://supabase.com)
+2. Create a new project
+3. Get your database connection string:
+   - Go to Project Settings → Database
+   - Find the "Connection string" section
+   - Copy the "URI" connection string
+   - It should look like: `postgresql://postgres:[YOUR-PASSWORD]@db.[YOUR-PROJECT-REF].supabase.co:5432/postgres`
+   - Keep this connection string secure and never commit it to version control
+
 ## Getting Started
 
 ```bash
