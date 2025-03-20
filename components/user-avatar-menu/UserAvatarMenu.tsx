@@ -8,7 +8,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
-import { Home, LogOut } from 'lucide-react';
+import { Home, LogOut, Settings } from 'lucide-react';
 import Link from 'next/link';
 import { User } from '@/lib/db/schema';
 
@@ -41,6 +41,12 @@ const UserAvatarMenu: React.FC<UserAvatarMenuProps> = ({
           <Link href='/dashboard' className='flex w-full items-center'>
             <Home className='mr-2 h-4 w-4' />
             <span>Dashboard</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem className='cursor-pointer'>
+          <Link href='/settings' className='flex w-full items-center'>
+            <Settings className='mr-2 h-4 w-4' />
+            <span>Settings</span>
           </Link>
         </DropdownMenuItem>
         <form action={handleSignOut} className='w-full'>

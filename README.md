@@ -32,6 +32,114 @@ cd saas-starter
 pnpm install
 ```
 
+## Local Database Setup
+
+This project uses Docker to run PostgreSQL and pgAdmin locally. The setup is isolated to avoid conflicts with other local databases.
+
+### Prerequisites
+
+- Docker and Docker Compose installed on your machine
+- Make (usually pre-installed on Unix-based systems)
+
+### Database Commands
+
+The following Make commands are available to manage your local database:
+
+```bash
+# Start the database and pgAdmin
+make db-up
+
+# Stop the database and pgAdmin
+make db-down
+
+# Stop and remove all containers and volumes (this will delete all data)
+make db-clean
+
+# View database logs
+make db-logs
+
+# Check status of database containers
+make db-status
+
+# Show database connection information
+make db-info
+```
+
+### Setting Up the Database
+
+1. Start the database:
+
+```bash
+make db-up
+```
+
+2. Verify the database is running:
+
+```bash
+make db-status
+```
+
+3. Run database migrations:
+
+```bash
+pnpm db:migrate
+```
+
+4. Seed the database with initial data:
+
+```bash
+pnpm db:seed
+```
+
+### Accessing pgAdmin
+
+1. Open pgAdmin in your browser at `http://localhost:5051`
+2. Log in with:
+
+   - Email: admin@admin.com
+   - Password: admin
+
+3. Connect to your PostgreSQL database:
+   - Right-click on "Servers" in the left sidebar
+   - Select "Register" → "Server"
+   - In the "General" tab:
+     - Name: "SaaS Starter DB" (or any name you prefer)
+   - In the "Connection" tab:
+     - Host name/address: `postgres` (this is the Docker service name)
+     - Port: `5432` (use the internal container port)
+     - Maintenance database: `saas_db`
+     - Username: `postgres`
+     - Password: `postgres`
+   - Click "Save"
+
+### Database Connection Details
+
+- **Host**: localhost
+- **Port**: 5433 (external port for host machine)
+- **Database**: saas_db
+- **Username**: postgres
+- **Password**: postgres
+
+Note: When connecting from pgAdmin (which runs in Docker), use:
+
+- Host: `postgres` (Docker service name)
+- Port: `5432` (internal container port)
+
+### Cleaning Up
+
+To completely remove the database and all its data:
+
+```bash
+make db-clean
+```
+
+This will:
+
+- Stop all containers
+- Remove all containers
+- Remove all volumes (deleting all data)
+- Remove the custom network
+
 ## Running Locally
 
 Use the included setup script to create your `.env` file:
