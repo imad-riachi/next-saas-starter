@@ -4,6 +4,29 @@ This is a starter template for building a SaaS application using **Next.js** wit
 
 **Demo: [https://leonairdo.honulabs.xyz/](https://leonairdo.honulabs.xyz/)**
 
+## Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Prerequisites](#prerequisites)
+  - [1. Vercel Account](#1-vercel-account)
+  - [2. Stripe Account and Webhook Setup](#2-stripe-account-and-webhook-setup)
+  - [3. Supabase Database](#3-supabase-database)
+- [Getting Started](#getting-started)
+- [Environment Variables Setup And Running Locally](#environment-variables-setup-and-running-locally)
+  - [Detailed Setup Instructions](#detailed-setup-instructions)
+  - [Important Notes](#important-notes)
+- [Local Setup](#local-setup)
+  - [Prerequisites](#prerequisites-1)
+  - [Database Commands](#database-commands)
+  - [Run The App Locally](#run-the-app-locally)
+  - [Accessing pgAdmin](#accessing-pgadmin)
+  - [Database Connection Details](#database-connection-details)
+  - [Cleaning Up](#cleaning-up)
+- [Testing Payments](#testing-payments)
+- [Going to Production](#going-to-production)
+- [Other Templates](#other-templates)
+
 ## Features
 
 - Marketing landing page (`/`) with animated Terminal element
@@ -73,6 +96,10 @@ Before you begin setting up this project, you'll need to have the following acco
    - Go to Stripe Dashboard → Developers → API keys
    - Copy your "Secret key" (starts with `sk_test_` for test mode)
    - Keep these keys secure and never commit them to version control
+   - To automatically create your Stripe products:
+     - Products are defined in `content.json` under the `pricing.products` section
+     - Run `pnpm stripe:create-products` to create the products in your Stripe account
+     - This script is safe to run multiple times - it won't affect existing products (including archived ones) that match the ones defined in `content.json`
 
 ### 3. Supabase Database
 
@@ -142,6 +169,10 @@ AUTH_SECRET=your_generated_auth_secret
      - Go to Stripe Dashboard → Developers → Webhooks
      - Create a new webhook endpoint pointing to your application
      - Copy the "Signing secret" (starts with `whsec_`)
+   - To automatically create your Stripe products:
+     - Products are defined in `content.json` under the `pricing.products` section
+     - Run `pnpm stripe:create-products` to create the products in your Stripe account
+     - This script is safe to run multiple times - it won't affect existing products (including archived ones) that match the ones defined in `content.json`
 
 3. **Base URL (BASE_URL)**:
 
@@ -163,7 +194,7 @@ AUTH_SECRET=your_generated_auth_secret
 - Use different API keys for development and production environments
 - The provided values in the example are for illustration only - you must replace them with your own values
 
-## Local Database Setup
+## Local Setup
 
 This project uses Docker to run PostgreSQL and pgAdmin locally. The setup is isolated to avoid conflicts with other local databases.
 
@@ -196,7 +227,7 @@ make db-status
 make db-info
 ```
 
-### Setting Up the Database
+### Run The App Locally
 
 1. Start the database:
 
@@ -221,6 +252,66 @@ pnpm db:migrate
 ```bash
 pnpm db:seed
 ```
+
+This will create the following user and team:
+
+- User: `test@test.com`
+- Password: `admin123`
+
+You can, of course, create new users as well through `/sign-up`.
+
+4. Setup products in Stripe:
+
+```bash
+pnpm stripe:create-products
+```
+
+This will setup the default products:
+
+```json
+[
+  {
+    "name": "Base",
+    "description": "Base subscription plan",
+    "unit_amount": 800,
+    "currency": "usd",
+    "recurring": {
+      "interval": "month",
+      "trial_period_days": 7
+    }
+  },
+  {
+    "name": "Plus",
+    "description": "Plus subscription plan",
+    "unit_amount": 1200,
+    "currency": "usd",
+    "recurring": {
+      "interval": "month",
+      "trial_period_days": 7
+    }
+  },
+  {
+    "name": "Enterprise",
+    "description": "Enterprise subscription plan",
+    "unit_amount": 12000,
+    "currency": "usd",
+    "recurring": {
+      "interval": "month",
+      "trial_period_days": 7
+    }
+  }
+]
+```
+
+Feel free to edit the `content.json` file in the root folder to set different products.
+
+5. Finally, run the Next.js development server:
+
+```bash
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the app in action.
 
 ### Accessing pgAdmin
 
@@ -270,42 +361,6 @@ This will:
 - Remove all containers
 - Remove all volumes (deleting all data)
 - Remove the custom network
-
-## Running Locally
-
-Use the included setup script to create your `.env` file:
-
-```bash
-pnpm db:setup
-```
-
-Then, run the database migrations and seed the database with a default user and team:
-
-```bash
-pnpm db:migrate
-pnpm db:seed
-```
-
-This will create the following user and team:
-
-- User: `test@test.com`
-- Password: `admin123`
-
-You can, of course, create new users as well through `/sign-up`.
-
-Finally, run the Next.js development server:
-
-```bash
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser to see the app in action.
-
-Optionally, you can listen for Stripe webhooks locally through their CLI to handle subscription change events:
-
-```bash
-stripe listen --forward-to localhost:3000/api/stripe/webhook
-```
 
 ## Testing Payments
 

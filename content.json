@@ -63,7 +63,7 @@
             {
                 "name": "Enterprise",
                 "description": "Enterprise subscription plan",
-                "unit_amount": 1200000,
+                "unit_amount": 12000,
                 "currency": "usd",
                 "recurring": {
                     "interval": "month",
