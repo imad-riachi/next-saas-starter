@@ -1,0 +1,111 @@
+---
+description: 
+globs: components/**/*
+alwaysApply: false
+---
+When creating new components in the components folder always follow the following folder structure:
+
+- forlder name in kebap case e.g. `price-card`
+Inside the folder:
+1. story file in pascal case e.g. PriceCard.stories.tsx - you will write a detailed story with a storybook test here, example:
+typescript```
+import React from 'react';
+import { Meta, StoryFn } from '@storybook/react';
+import FeatureCard, { FeatureCardProps } from './FeatureCard';
+import { Database } from 'lucide-react';
+
+export default {
+  title: 'Components/FeatureCard',
+  component: FeatureCard,
+} as Meta;
+
+const Template: StoryFn<FeatureCardProps> = (args) => <FeatureCard {...args} />;
+
+export const Default = Template.bind({});
+Default.args = {
+  icon: 'Database',
+  title: 'Robust Database',
+  description: 'Efficient data management with our intuitive ORM.',
+};
+```
+2. the components itself in pascal case e.g. PriceCard.tsx below is an example:
+typescript```
+'use client';
+import { useEffect, useRef } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { icons } from 'lucide-react';
+
+export type FeatureCardProps = {
+  icon: keyof typeof icons;
+  title: string;
+  description: string;
+  delay?: number;
+};
+
+const FeatureCard: React.FC<FeatureCardProps> = ({
+  icon,
+  title,
+  description,
+  delay = 0,
+}: FeatureCardProps) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const Icon = icons[icon];
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1,
+    };
+
+    const handleIntersect: IntersectionObserverCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('animate-fade-up');
+            entry.target.classList.remove('opacity-0');
+          }, delay);
+          observer.unobserve(entry.target);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, observerOptions);
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, [delay]);
+
+  return (
+    <Card
+      ref={cardRef}
+      className='translate-y-4 transform opacity-0 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl'
+    >
+      <CardHeader>
+        <div className='bg-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full'>
+          <Icon className='text-primary h-6 w-6' />
+        </div>
+        <CardTitle className='font-heading mb-2 text-xl font-semibold tracking-wide'>
+          {title}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className='text-foreground/70'>{description}</p>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default FeatureCard;
+```
+3. index.tsx an index file that will export the component as a default export and the props as a type export, potentally there could be other exports in some cases
+typescript```
+export { default, type FeatureCardProps } from './FeatureCard';
+```

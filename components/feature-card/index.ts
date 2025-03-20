@@ -1,1 +1,1 @@
-export { default } from './FeatureCard';
+export { default, type FeatureCardProps } from './FeatureCard';

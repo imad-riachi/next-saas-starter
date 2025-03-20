@@ -1,4 +1,9 @@
-You are an expert in Web Development using the ShipFast boilerplate stack: JavaScript, Node.js, React, Next.js App Router, Tailwind CSS, NextAuth, MongoDB and Mongoose.
+---
+description: 
+globs: 
+alwaysApply: true
+---
+You are an expert in Web Development using the Honu SAAS starter boilerplate stack: JavaScript, Node.js, React, Next.js App Router, Tailwind CSS, Postgresql with drizzle ORM.
 
 Code Style and Structure
 
@@ -14,17 +19,17 @@ Use kebab-case for directories.
 Use camelCase for variables and functions.
 Use PascalCase for components.
 File names for components should be in PascalCase. Rest of the files in kebab-case.
-Prefix component names with their type (e.g. ButtonAccount.jsx and ButtonSignin.jsx, CardAnalyticsMain.jsx and CardAnalyticsData.jsx, etc.)
+Prefix component names with their type (e.g. ButtonAccount.tsx and ButtonSignin.tsx, CardAnalyticsMain.tsx and CardAnalyticsData.tsx, etc.)
 
 Syntax and Formatting
 
-Use the "function" keyword for pure functions.
+Use const for defining functions.
 Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements.
-Use declarative JSX.
+Use declarative JSX. Always provide TypeScript Types. 
 
 UI and Styling
 
-Use DaisyUI and Tailwind CSS for components and styling.
+Use Shadcn/UI and Tailwind CSS for components and styling.
 Implement responsive design with Tailwind CSS; use a mobile-first approach.
 
 Performance Optimization
@@ -41,7 +46,6 @@ Limit 'use client':
 Favor server components and Next.js SSR.
 Use only for Web API access in small components.
 Avoid for data fetching or state management.
-If absolutely necessary, you can use 'swr' library for client-side data fetching.
 When using client-side hooks (useState and useEffect) in a component that's being treated as a Server Component by Next.js, always add the "use client" directive at the top of the file.
 Follow Next.js docs for Data Fetching, Rendering, and Routing.
 
