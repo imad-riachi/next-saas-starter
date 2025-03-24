@@ -8,6 +8,7 @@ This is a starter template for building a SaaS application using **Next.js** wit
 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
+- [Storybook](#storybook)
 - [Prerequisites](#prerequisites)
   - [1. Vercel Account](#1-vercel-account)
   - [2. Stripe Account and Webhook Setup](#2-stripe-account-and-webhook-setup)
@@ -46,6 +47,60 @@ This is a starter template for building a SaaS application using **Next.js** wit
 - **ORM**: [Drizzle](https://orm.drizzle.team/)
 - **Payments**: [Stripe](https://stripe.com/)
 - **UI Library**: [shadcn/ui](https://ui.shadcn.com/)
+
+## Storybook
+
+This project uses [Storybook](https://storybook.js.org/) as a development environment for UI components. Storybook allows us to build, test, and document UI components in isolation, which improves development efficiency and ensures consistent design implementation.
+
+### Why We Use Storybook
+
+- **Component Development in Isolation**: Work on UI components without needing to run the entire application
+- **Visual Testing**: Preview UI components in different states and configurations
+- **Documentation**: Auto-generate documentation for our component library
+- **Collaboration**: Makes it easier for designers and developers to collaborate on UI components
+
+### Running Storybook
+
+To start Storybook locally:
+
+```bash
+pnpm storybook
+```
+
+This will launch Storybook at [http://localhost:6006](http://localhost:6006).
+
+### Creating Stories
+
+When building a new component, always create a corresponding Storybook story to document its usage:
+
+```tsx
+// ComponentName.stories.tsx
+import { Meta, StoryObj } from '@storybook/react';
+import Button from './Button';
+
+const meta: Meta<typeof Button> = {
+  title: 'Components/Button',
+  component: Button,
+  tags: ['autodocs'],
+};
+
+export default meta;
+type Story = StoryObj<typeof Button>;
+
+export const Primary: Story = {
+  args: {
+    variant: 'primary',
+    children: 'Click Me',
+  },
+};
+```
+
+### Best Practices
+
+1. Create stories for all reusable components
+2. Document component variations and edge cases
+3. Use the [Component Story Format (CSF)](https://storybook.js.org/docs/react/api/csf) for writing stories
+4. Use [Args](https://storybook.js.org/docs/react/writing-stories/args) to demonstrate different states of a component
 
 ## Prerequisites
 
