@@ -9,12 +9,16 @@ This is a starter template for building a SaaS application using **Next.js** wit
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Storybook](#storybook)
+  - [Why We Use Storybook](#why-we-use-storybook)
+  - [Running Storybook](#running-storybook)
+  - [Creating Stories](#creating-stories)
+  - [Best Practices](#best-practices)
 - [Prerequisites](#prerequisites)
   - [1. Vercel Account](#1-vercel-account)
   - [2. Stripe Account and Webhook Setup](#2-stripe-account-and-webhook-setup)
   - [3. Supabase Database](#3-supabase-database)
 - [Getting Started](#getting-started)
-- [Environment Variables Setup And Running Locally](#environment-variables-setup-and-running-locally)
+- [Environment Variables Setup](#environment-variables-setup)
   - [Detailed Setup Instructions](#detailed-setup-instructions)
   - [Important Notes](#important-notes)
 - [Local Setup](#local-setup)
@@ -26,6 +30,10 @@ This is a starter template for building a SaaS application using **Next.js** wit
   - [Cleaning Up](#cleaning-up)
 - [Testing Payments](#testing-payments)
 - [Going to Production](#going-to-production)
+  - [Deploy to Vercel](#deploy-to-vercel)
+  - [Deploy Script Capabilities](#deploy-script-capabilities)
+  - [Add environment variables](#add-environment-variables)
+  - [Set up a production Stripe webhook](#set-up-a-production-stripe-webhook)
 - [Other Templates](#other-templates)
 
 ## Features
@@ -429,45 +437,104 @@ To test Stripe payments, use the following test card details:
 
 When you're ready to deploy your SaaS application to production, follow these steps:
 
-### Set up a production Stripe webhook
-
-1. Go to the Stripe Dashboard and create a new webhook for your production environment.
-2. Set the endpoint URL to your production API route (e.g., `https://yourdomain.com/api/stripe/webhook`).
-3. Select the events you want to listen for (e.g., `checkout.session.completed`, `customer.subscription.updated`).
-
 ### Deploy to Vercel
 
-1. Push your code to a GitHub repository.
-2. Connect your repository to [Vercel](https://vercel.com/) and deploy it.
-3. Follow the Vercel deployment process, which will guide you through setting up your project.
+We provide a deploy script that abstracts away the Vercel CLI functionality, so you don't need to install the Vercel CLI globally on your machine. This script handles the entire deployment process in one convenient command:
+
+```bash
+pnpm run deploy
+```
+
+The deploy script will:
+
+1. **Log you in to your Vercel account** - You'll be prompted to enter your Vercel credentials or authenticate through a browser
+2. **Guide you through project creation** - The script will ask you to name your project and configure basic settings
+3. **Set up deployment settings** - It will automatically detect your Next.js project and suggest optimal settings
+4. **Deploy your application** - Your code will be built and deployed to Vercel's global CDN
+
+### Deploy Script Capabilities
+
+Our deploy script is a wrapper around the Vercel CLI, providing access to all its functionality without requiring a global installation. You can leverage these powerful features by passing additional arguments to the script:
+
+```bash
+pnpm run deploy --[vercel-cli-arguments]
+```
+
+For example:
+
+```bash
+# List all your Vercel projects
+pnpm run deploy --ls
+
+```
+
+For a complete list of commands and options, run:
+
+```bash
+pnpm run deploy -- help
+```
+
+The deploy script gives you the full power of the Vercel CLI while maintaining a consistent environment for your team and eliminating the need for separate CLI installation.
 
 ### Add environment variables
 
-In your Vercel project settings (or during deployment), add all the necessary environment variables. Make sure to update the values for the production environment, including:
+After deployment, you'll need to configure environment variables on Vercel. This is a critical step for your application to function properly in production.
 
-1. `BASE_URL`: Set this to your production domain.
-2. `STRIPE_SECRET_KEY`: Use your Stripe secret key for the production environment.
-3. `STRIPE_WEBHOOK_SECRET`: Use the webhook secret from the production webhook you created in step 1.
-4. `POSTGRES_URL`: Set this to your production database URL.
-5. `AUTH_SECRET`: Set this to a random string. `openssl rand -base64 32` will generate one.
+#### 1. Create your production environment file
 
-To set up your production environment variables on Vercel, you can use the `.env.vercel` file:
+First, create a `.env.vercel` file based on the example template:
 
 ```bash
-# Create .env.vercel file with your production variables
 cp .env.example .env.vercel
-
-# Edit .env.vercel with your production values
-# Then deploy the environment variables to Vercel
-pnpm deploy-env
 ```
 
-This will sync your `.env.vercel` file with your Vercel project's environment variables. Note that this is separate from your local `.env` file and is specifically for managing production environment variables on Vercel.
+#### 2. Update production variables
 
-## Other Templates
+Open the `.env.vercel` file in your code editor and update these essential variables:
 
-While this template is intentionally minimal and to be used as a learning resource, there are other paid versions in the community which are more full-featured:
+```env
+# Production environment variables
+BASE_URL=https://your-project-name.vercel.app
+POSTGRES_URL=your_production_database_url
+STRIPE_SECRET_KEY=sk_live_your_stripe_production_key
+STRIPE_WEBHOOK_SECRET=whsec_your_production_webhook_secret
+AUTH_SECRET=your_generated_auth_secret
+```
 
-- https://achromatic.dev
-- https://shipfa.st
-- https://makerkit.dev
+Key variables to configure:
+
+- `BASE_URL`: Your production domain (e.g., `https://your-project-name.vercel.app`)
+- `POSTGRES_URL`: The connection string for your production database
+- `STRIPE_SECRET_KEY`: Your Stripe live mode secret key (starts with `sk_live_`)
+- `STRIPE_WEBHOOK_SECRET`: The webhook secret from the production webhook you set up
+- `AUTH_SECRET`: A secure random string (generate with `openssl rand -base64 32`)
+
+#### 3. Deploy your environment variables
+
+Run our environment deployment script to push these variables to Vercel:
+
+```bash
+pnpm run deploy-env
+```
+
+This script will:
+
+- Connect to your Vercel project
+- Sync all variables from your `.env.vercel` file to Vercel's environment variables
+- Confirm once the variables are successfully deployed
+
+The variables will be available in your Vercel production environment, separate from your local development variables. You can verify them in the Vercel dashboard under your project's Settings → Environment Variables.
+
+Make sure to redeploy again for the env vars to be picked up by the app.
+
+### Set up a production Stripe webhook
+
+Once your project is deployed, you'll need to set up a Stripe webhook for the production environment:
+
+1. Go to the Stripe Dashboard and create a new webhook for your production environment.
+2. Set the endpoint URL to your production API route (e.g., `https://your-project-name.vercel.app/api/stripe/webhook`).
+3. Select the events to listen for:
+   - `checkout.session.completed`
+   - `customer.subscription.updated`
+   - `customer.subscription.deleted`
+4. Copy the webhook signing secret for the next step.
