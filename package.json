@@ -18,7 +18,9 @@
     "deploy": "vercel",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "deploy-env": "npx tsx deploy-env.ts"
+    "deploy-env": "npx tsx deploy-env.ts",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@next/mdx": "^15.2.1",

@@ -18,7 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({ links, children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  const isDashboard = pathname.startsWith('/dashboard');
+  const isDashboard = pathname?.startsWith('/dashboard') ?? false;
 
   // Handle scroll event to change navbar appearance
   useEffect(() => {
