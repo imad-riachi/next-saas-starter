@@ -3,10 +3,15 @@ import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
 import { UserProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
+import Script from 'next/script';
+
+import ThemeProvider from '@/components/theme-provider';
+
+import content from '../content.json';
 
 export const metadata: Metadata = {
-  title: 'Next.js SaaS Starter',
-  description: 'Get started quickly with Next.js, Postgres, and Stripe.',
+  title: content.metadata.title,
+  description: content.metadata.description,
 };
 
 export const viewport: Viewport = {
@@ -21,14 +26,34 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const userPromise = getUser();
+  const gtmId = process.env.GTM_ID; // Access the GTM ID from the environment
 
   return (
-    <html
-      lang='en'
-      className={`bg-white text-black dark:bg-gray-950 dark:text-white ${manrope.className}`}
-    >
-      <body className='min-h-[100dvh] bg-gray-50'>
-        <UserProvider userPromise={userPromise}>{children}</UserProvider>
+    <html lang='en' className={`${manrope.className}`} suppressHydrationWarning>
+      <head>
+        {/* Google tag (gtag.js) */}
+        <Script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${gtmId}`}
+        ></Script>
+        <Script>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${gtmId}');
+          `}
+        </Script>
+      </head>
+      <body>
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem
+          disableTransitionOnChange
+        >
+          <UserProvider userPromise={userPromise}>{children}</UserProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

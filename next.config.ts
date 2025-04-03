@@ -1,10 +1,9 @@
 import type { NextConfig } from 'next';
+import createMDX from '@next/mdx';
 
 const nextConfig: NextConfig = {
-  experimental: {
-    ppr: true,
-    newDevOverlay: true,
-  },
+  pageExtensions: ['ts', 'tsx', 'mdx'],
 };
+const withMDX = createMDX({});
 
-export default nextConfig;
+export default withMDX(nextConfig);

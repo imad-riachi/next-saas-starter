@@ -1,7 +1,44 @@
-import { checkoutAction } from '@/lib/payments/actions';
-import { Check } from 'lucide-react';
 import { getStripePrices, getStripeProducts } from '@/lib/payments/stripe';
-import { SubmitButton } from './submit-button';
+
+import PricingHeader from '@/components/pricing-header';
+import PriceCard from '@/components/pricing-card';
+
+import content from '../../../content.json';
+
+const colorVariants = [
+  {
+    gradientFrom: 'from-orange-400',
+    gradientTo: 'to-orange-500',
+    hoverBorderColor: 'border-orange-300',
+    hoverShadowColor: 'shadow-orange-100',
+    hoverFrom: 'from-orange-300',
+    hoverTo: 'to-orange-400',
+  },
+  {
+    gradientFrom: 'from-blue-400',
+    gradientTo: 'to-blue-500',
+    hoverBorderColor: 'border-blue-300',
+    hoverShadowColor: 'shadow-blue-100',
+    hoverFrom: 'from-blue-300',
+    hoverTo: 'to-blue-400',
+  },
+  {
+    gradientFrom: 'from-green-400',
+    gradientTo: 'to-green-500',
+    hoverBorderColor: 'border-green-300',
+    hoverShadowColor: 'shadow-green-100',
+    hoverFrom: 'from-green-300',
+    hoverTo: 'to-green-400',
+  },
+  {
+    gradientFrom: 'from-purple-400',
+    gradientTo: 'to-purple-500',
+    hoverBorderColor: 'border-purple-300',
+    hoverShadowColor: 'shadow-purple-100',
+    hoverFrom: 'from-purple-300',
+    hoverTo: 'to-purple-400',
+  },
+];
 
 // Prices are fresh for one hour max
 export const revalidate = 3600;
@@ -18,77 +55,44 @@ export default async function PricingPage() {
   const basePrice = prices.find((price) => price.productId === basePlan?.id);
   const plusPrice = prices.find((price) => price.productId === plusPlan?.id);
 
+  // Sort products by price amount
+  const sortedProducts = products.sort((a, b) => {
+    const priceA =
+      prices.find((price) => price.productId === a.id)?.unitAmount || 0;
+    const priceB =
+      prices.find((price) => price.productId === b.id)?.unitAmount || 0;
+    return priceA - priceB;
+  });
+
   return (
     <main className='mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8'>
-      <div className='mx-auto grid max-w-xl gap-8 md:grid-cols-2'>
-        <PricingCard
-          name={basePlan?.name || 'Base'}
-          price={basePrice?.unitAmount || 800}
-          interval={basePrice?.interval || 'month'}
-          trialDays={basePrice?.trialPeriodDays || 7}
-          features={[
-            'Unlimited Usage',
-            'Unlimited Workspace Members',
-            'Email Support',
-          ]}
-          priceId={basePrice?.id}
-        />
-        <PricingCard
-          name={plusPlan?.name || 'Plus'}
-          price={plusPrice?.unitAmount || 1200}
-          interval={plusPrice?.interval || 'month'}
-          trialDays={plusPrice?.trialPeriodDays || 7}
-          features={[
-            'Everything in Base, and:',
-            'Early Access to New Features',
-            '24/7 Support + Slack Access',
-          ]}
-          priceId={plusPrice?.id}
-        />
+      <PricingHeader
+        title={content.pricing.title}
+        subtitle={content.pricing.subtitle}
+      />
+      <div className='flex flex-wrap justify-center gap-8'>
+        {sortedProducts.map((product, index) => {
+          const price = prices.find((price) => price.productId === product?.id);
+          const colors = colorVariants[index % colorVariants.length];
+          return (
+            <PriceCard
+              key={product.id}
+              name={product?.name || 'Base'}
+              price={price?.unitAmount || 800}
+              interval={price?.interval || 'month'}
+              trialDays={price?.trialPeriodDays || 7}
+              features={[
+                'Unlimited Usage',
+                'Unlimited Workspace Members',
+                'Email Support',
+              ]}
+              {...colors}
+              featured={false}
+              priceId={price?.id}
+            />
+          );
+        })}
       </div>
     </main>
-  );
-}
-
-function PricingCard({
-  name,
-  price,
-  interval,
-  trialDays,
-  features,
-  priceId,
-}: {
-  name: string;
-  price: number;
-  interval: string;
-  trialDays: number;
-  features: string[];
-  priceId?: string;
-}) {
-  return (
-    <div className='pt-6'>
-      <h2 className='mb-2 text-2xl font-medium text-gray-900'>{name}</h2>
-      <p className='mb-4 text-sm text-gray-600'>
-        with {trialDays} day free trial
-      </p>
-      <p className='mb-6 text-4xl font-medium text-gray-900'>
-        ${price / 100}{' '}
-        <span className='text-xl font-normal text-gray-600'>
-          per user / {interval}
-        </span>
-      </p>
-      <ul className='mb-8 space-y-4'>
-        {features.map((feature, index) => (
-          <li key={index} className='flex items-start'>
-            <Check className='mt-0.5 mr-2 h-5 w-5 flex-shrink-0 text-orange-500' />
-            <span className='text-gray-700'>{feature}</span>
-          </li>
-        ))}
-      </ul>
-      <form action={checkoutAction}>
-        <input type='hidden' name='priceId' value={priceId} />
-        <SubmitButton />
-      </form>
-    </div>
   );
 }

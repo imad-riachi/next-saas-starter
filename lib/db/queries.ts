@@ -53,7 +53,7 @@ export async function updateTeamSubscription(
     stripeProductId: string | null;
     planName: string | null;
     subscriptionStatus: string;
-  }
+  },
 ) {
   await db
     .update(teams)

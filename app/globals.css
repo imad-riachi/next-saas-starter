@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin '@tailwindcss/typography';
 
 /*
   ---break---
@@ -163,8 +164,8 @@
   --card-foreground: hsl(240deg 10% 3.9%);
   --popover: hsl(0deg 0% 100%);
   --popover-foreground: hsl(240deg 10% 3.9%);
-  --primary: hsl(240deg 5.9% 10%);
-  --primary-foreground: hsl(0deg 0% 98%);
+  --primary: hsl(220deg 60% 50%);
+  --primary-foreground: hsl(0deg 0% 100%);
   --secondary: hsl(240deg 4.8% 95.9%);
   --secondary-foreground: hsl(240deg 5.9% 10%);
   --muted: hsl(240deg 4.8% 95.9%);
@@ -195,8 +196,8 @@
   --card-foreground: hsl(0deg 0% 98%);
   --popover: hsl(240deg 10% 3.9%);
   --popover-foreground: hsl(0deg 0% 98%);
-  --primary: hsl(0deg 0% 98%);
-  --primary-foreground: hsl(240deg 5.9% 10%);
+  --primary: hsl(220deg 60% 50%);
+  --primary-foreground: hsl(0deg 0% 100%);
   --secondary: hsl(240deg 3.7% 15.9%);
   --secondary-foreground: hsl(0deg 0% 98%);
   --muted: hsl(240deg 3.7% 15.9%);
